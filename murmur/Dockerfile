@@ -41,8 +41,8 @@ WORKDIR /murmur
 RUN cp -r /tmp/pr-mumble-fix-master/python .
 RUN cp -r /tmp/pr-mumble-fix-master/libs .
 
-COPY setup.sh .
-COPY entrypoint.sh .
+COPY murmur/setup.sh .
+COPY murmur/entrypoint.sh .
 
 RUN chmod +x setup.sh; \
     chmod +x entrypoint.sh; \
