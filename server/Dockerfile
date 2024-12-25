@@ -3,12 +3,12 @@ FROM ubuntu:22.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt update
-RUN apt install -y --no-install-recommends wget libncurses5 libpython2.7
+RUN apt install -y --no-install-recommends wget libncurses5 libpython2.7 python2.7
 
 RUN useradd -d /pr -ms /bin/bash pr
 
 WORKDIR /pr
-COPY app/ .
+COPY --chown=pr:pr app/ .
 
 RUN chmod +x bin/amd-64/prbf2_l64ded.PRMSProxy
 RUN chmod +x bin/amd-64/prbf2_l64ded
@@ -22,7 +22,7 @@ COPY assets/libcrypto1.0.0-udeb_1.0.2n-1ubuntu5_amd64.udeb .
 RUN mkdir _tmp && dpkg -x libcrypto1.0.0-udeb_1.0.2n-1ubuntu5_amd64.udeb _tmp/
 RUN cp _tmp/usr/lib/libcrypto.so.1.0.0 bin/amd-64/ && rm -r _tmp
 
-RUN chown -R pr:pr /pr
+RUN ln -s /usr/bin/python2.7 /usr/bin/python
 
 # game port
 EXPOSE 16567/udp
