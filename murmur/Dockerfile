@@ -1,26 +1,21 @@
-FROM ubuntu:22.04
+FROM debian:10-slim
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt update
 RUN apt install -y --no-install-recommends \
-    python2 \
-    wget \
-    unzip \
-    software-properties-common \
-    gpg-agent ;
-
-RUN add-apt-repository ppa:ubuntuhandbook1/ppa
-RUN apt update
-RUN apt install -y --no-install-recommends \
+        python \
+        libcap2 \
         libqt4-dbus \
         libqt4-sql \
         libqt4-sql-sqlite \
-        libqt4-network ;
+        libqt4-network \
+        unzip \
+        wget;
 
 RUN useradd -d /murmur -ms /bin/bash murmur
 
-COPY app/mods/pr/bin/PRMurmur /murmur
+COPY --chown=murmur:murmur app/mods/pr/bin/PRMurmur /murmur
 
 WORKDIR /tmp
 
@@ -41,16 +36,14 @@ WORKDIR /murmur
 RUN cp -r /tmp/pr-mumble-fix-master/python .
 RUN cp -r /tmp/pr-mumble-fix-master/libs .
 
-COPY murmur/setup.sh .
-COPY murmur/entrypoint.sh .
+COPY --chown=murmur:murmur murmur/setup.sh .
+COPY --chown=murmur:murmur murmur/entrypoint.sh .
 
 RUN chmod +x setup.sh; \
     chmod +x entrypoint.sh; \
     chmod +x initialsetup.sh; \
     chmod +x createchannel.sh; \
     chmod +x prmurmurd.x64;
-
-RUN chown -R murmur:murmur /murmur
 
 EXPOSE 64740/tcp
 EXPOSE 64740/udp
