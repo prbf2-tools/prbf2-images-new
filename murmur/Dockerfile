@@ -28,9 +28,6 @@ RUN dpkg -i pr-mumble-fix-master/ice34-slice_3.4.2-8.2_all.deb
 RUN wget http://snapshot.debian.org/archive/debian/20150709T214436Z/pool/main/o/openssl/libssl1.0.0_1.0.2d-1_amd64.deb
 RUN dpkg -i libssl1.0.0_1.0.2d-1_amd64.deb
 
-# Alias python2 to python
-RUN ln -s /usr/bin/python2 /usr/bin/python
-
 WORKDIR /murmur
 
 RUN cp -r /tmp/pr-mumble-fix-master/python .
@@ -55,6 +52,7 @@ ENV CHANNEL_ID="main0"
 ENV SERVER_NAME="PR Server"
 ENV GAMESERVER_IP="127.0.0.1"
 # ENV MURMUR_SU_PASS="supersecretpassword"
+# ENV MURMUR_SECRET="prbf2sharedsecret"
 
 USER murmur
 
