@@ -1,10 +1,7 @@
-FROM ubuntu:22.04 AS download
-ARG PROXY_VER="1.0.1.0"
+FROM alpine:3.21 AS download
+ARG PROXY_VER="master"
 
-ENV DEBIAN_FRONTEND=noninteractive
-
-RUN apt update
-RUN apt install -y --no-install-recommends \
+RUN apk add \
   wget \
   unzip
 
@@ -13,17 +10,15 @@ WORKDIR /proxy
 RUN wget --no-check-certificate https://gitlab.com/realitymod/public/prserverproxy/-/archive/$PROXY_VER/prserverproxy-$PROXY_VER.zip
 RUN unzip -j prserverproxy-$PROXY_VER.zip
 
-FROM ubuntu:22.04
+FROM python:3-alpine3.21
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt update
-RUN apt install -y --no-install-recommends \
-  python3 \
-  python3-aiohttp \
-  python3-certifi
+RUN pip3 install \
+  aiohttp \
+  certifi
 
-RUN useradd -u 16567 -d /proxy -ms /bin/bash prproxy
+RUN adduser -u 16567 -h /proxy -s /bin/bash -D prproxy
 
 USER prproxy
 WORKDIR /proxy
