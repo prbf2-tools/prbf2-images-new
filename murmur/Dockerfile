@@ -48,11 +48,12 @@ EXPOSE 64740/udp
 ENV LD_LIBRARY_PATH="/murmur/libs"
 ENV PYTHONPATH="/murmur/python/Ice/"
 
+# ENV MURMUR_PORT="64740"
+# ENV MURMUR_SU_PASS="supersecretpassword"
+# ENV MURMUR_SECRET="prbf2sharedsecret"
 ENV CHANNEL_ID="main0"
 ENV SERVER_NAME="PR Server"
 ENV GAMESERVER_IP="127.0.0.1"
-# ENV MURMUR_SU_PASS="supersecretpassword"
-# ENV MURMUR_SECRET="prbf2sharedsecret"
 
 USER murmur
 

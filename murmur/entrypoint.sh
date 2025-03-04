@@ -3,6 +3,11 @@
 # enable bash job control
 set -m
 
+if [[ -v MURMUR_PORT ]]; then
+    echo "Setting port to ${MURMUR_PORT}"
+    sed -i "s/^port=.*/port=${MURMUR_PORT}/" ./prmurmur.ini
+fi
+
 # start the server
 ./prmurmurd.x64 -fg &
 
