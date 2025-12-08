@@ -2,16 +2,18 @@ FROM debian:10-slim
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+RUN echo "deb http://archive.debian.org/debian buster main" > /etc/apt/sources.list
+
 RUN apt update
 RUN apt install -y --no-install-recommends \
-        python \
-        libcap2 \
-        libqt4-dbus \
-        libqt4-sql \
-        libqt4-sql-sqlite \
-        libqt4-network \
-        unzip \
-        wget;
+    python \
+    libcap2 \
+    libqt4-dbus \
+    libqt4-sql \
+    libqt4-sql-sqlite \
+    libqt4-network \
+    unzip \
+    wget;
 
 RUN useradd -d /murmur -ms /bin/bash murmur
 
