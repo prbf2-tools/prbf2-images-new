@@ -6,7 +6,7 @@ if [[ -f ".murmursetup" ]]; then
 else
     cd mumo/tools
 
-    python prbf2setup.py -s prmurmurpassword -i "../../PRMurmur.ice"
+    python prbf2setup.py -p $MUMO_PORT -s prmurmurpassword -i "../../PRMurmur.ice"
 
     if [[ -v MURMUR_SECRET ]]; then
         if [ ! -f /murmur/mumo/modules-enabled/prbf2.ini ]; then
@@ -18,7 +18,7 @@ secret = ${MURMUR_SECRET}" > /murmur/mumo/modules-enabled/prbf2.ini
         fi
     fi
 
-    python prbf2man.py -c $CHANNEL_ID -n "$SERVER_NAME" -f $GAMESERVER_IP -b 1 -o "../modules-enabled/prbf2.ini" -s prmurmurpassword -i "../../PRMurmur.ice"
+    python prbf2man.py -p $MUMO_PORT -c $CHANNEL_ID -n "$SERVER_NAME" -f $GAMESERVER_IP -b 1 -o "../modules-enabled/prbf2.ini" -s prmurmurpassword -i "../../PRMurmur.ice"
 
     if [[ -v MURMUR_SU_PASS ]]; then
         ./prmurmurd.x64 -supw $MURMUR_SU_PASS
